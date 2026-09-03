@@ -3,6 +3,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { LoginResponse } from '../types/auth';
 
 interface AuthUser {
+    id: number;
     username: string;
     role: 'ADMIN' | 'STUDENT';
 }
@@ -19,7 +20,7 @@ const TOKEN_KEY = 'crs_token';
 const USER_KEY = 'crs_user';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    // Khởi tạo state bằng Lazy Initial State thay vì dùng useEffect
+    // Khoi tao state va doc id tu localStorage
     const [user, setUser] = useState<AuthUser | null>(() => {
         const savedUser = localStorage.getItem(USER_KEY);
         const savedToken = localStorage.getItem(TOKEN_KEY);
@@ -35,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const login = (data: LoginResponse) => {
         localStorage.setItem(TOKEN_KEY, data.token);
-        const authUser: AuthUser = { username: data.username, role: data.role };
+        const authUser: AuthUser = { id: data.userId, username: data.username, role: data.role };
         localStorage.setItem(USER_KEY, JSON.stringify(authUser));
         setUser(authUser);
     };

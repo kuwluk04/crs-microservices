@@ -1,4 +1,3 @@
-// path: crs-frontend/src/App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -7,6 +6,7 @@ import CoursesPage from './pages/CoursesPage';
 import AdminCoursesPage from './pages/AdminCoursesPage';
 import RegisterCoursePage from './pages/RegisterCoursePage';
 import Navbar from './components/Navbar';
+import {MyRegistrationsPage} from './pages/MyRegistrationsPage';
 
 export default function App() {
     return (
@@ -30,6 +30,14 @@ export default function App() {
                         element={
                             <ProtectedRoute requiredRole="STUDENT">
                                 <RegisterCoursePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/my-registrations"
+                        element={
+                            <ProtectedRoute requiredRole="STUDENT">
+                                <MyRegistrationsPage />
                             </ProtectedRoute>
                         }
                     />
